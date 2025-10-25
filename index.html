@@ -1,40 +1,32 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>On regarde de plus près : l'IA Générative</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>On regarde de plus près : l’IA Générative</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="favicon.ico">
+  <script defer src="script.js"></script>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 <body>
-  <header class="site-header">
-    <div class="logo"><img src="logo.svg" alt="logo" height="40"></div>
-    <nav class="main-nav">
-      <a href="index.html">Accueil</a>
+  <header>
+    <img src="logo.svg" alt="Logo du site" class="logo">
+    <nav>
+      <a href="index.html" class="active">Accueil</a>
       <a href="archives.html">Archives</a>
       <a href="about.html">À propos</a>
       <a href="contact.html">Contact</a>
     </nav>
-    <div id="datetime" class="datetime"></div>
+    <div class="header-right">
+      <span id="datetime"></span>
+      <button id="theme-toggle" title="Changer le thème">☀︎</button>
+    </div>
   </header>
 
-  <main class="container">
-    <h1>On regarde de plus près : l'IA Générative</h1>
-    <p class="lead">Actualité et innovations récentes (moins de 6 mois) sur l'intelligence artificielle et les modèles de langage.</p>
+  <main id="articles"></main>
 
-    <section id="articles" class="articles"></section>
-
-    <aside class="sidebar">
-      <h3>À la une</h3>
-      <div id="featured"></div>
-    </aside>
-  </main>
-
-  <footer class="site-footer">
-    <p>© 2025 — On regarde de plus près : l'IA Générative</p>
+  <footer>
+    <p>© 2025 On regarde de plus près : l’IA Générative – Tous droits réservés.</p>
   </footer>
-
-  <script src="script.js"></script>
 </body>
 </html>

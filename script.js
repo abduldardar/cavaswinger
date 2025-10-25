@@ -1,56 +1,48 @@
-
-// script.js — gère la date/heure et l'import d'articles depuis /data/articles.json
-function updateDateTime(){
-  const el = document.getElementById('datetime');
-  if(!el) return;
-  const now = new Date();
-  const opts = { year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' };
-  el.textContent = now.toLocaleString('fr-FR', opts);
-}
-updateDateTime();
-setInterval(updateDateTime, 60*1000);
-
-// Chargement des articles depuis data/articles.json
-async function loadArticles(){
-  try{
-    const res = await fetch('/data/articles.json');
-    if(!res.ok) throw new Error('Impossible de charger les articles');
-    const data = await res.json();
-    const list = data.articles || [];
-    // Trier par date décroissante
-    list.sort((a,b)=> new Date(b.date) - new Date(a.date));
-    const container = document.getElementById('articles');
-    const archiveList = document.getElementById('archive-list');
-    const featured = document.getElementById('featured');
-    if(container){
-      container.innerHTML = '';
-      list.forEach((art, idx) => {
-        const dom = document.createElement('article');
-        dom.className = 'article';
-        dom.innerHTML = `
-          <img src="${art.url_image}" alt="${art.titre}">
-          <div class="meta"><time datetime="${art.date}">${art.date}</time> · <span>${art.lien_source ? '<a href="'+art.lien_source+'" target="_blank" rel="noopener">Source</a>' : ''}</span></div>
-          <h2>${art.titre}</h2>
-          <p>${art.resume}</p>
-        `;
-        container.appendChild(dom);
-        if(idx===0 && featured) featured.innerHTML = `<strong>${art.titre}</strong><p><time datetime="${art.date}">${art.date}</time></p>`;
-      });
-    }
-    if(archiveList){
-      archiveList.innerHTML = '';
-      list.forEach(art => {
-        const li = document.createElement('li');
-        li.innerHTML = `<a href="index.html#">${art.titre}</a> — <time datetime="${art.date}">${art.date}</time>`;
-        archiveList.appendChild(li);
-      });
-    }
-  }catch(err){
-    console.error(err);
+document.addEventListener("DOMContentLoaded", () => {
+  // Affichage de la date/heure
+  const datetimeElement = document.getElementById("datetime");
+  function updateDateTime() {
+    const now = new Date();
+    datetimeElement.textContent = now.toLocaleString("fr-FR", {
+      dateStyle: "medium",
+      timeStyle: "short",
+    });
   }
-}
-loadArticles();
+  updateDateTime();
+  setInterval(updateDateTime, 60000);
 
-// Préparation pour import automatique / ajout et archivage
-// Le script ci‑dessous est un placeholder côté client : pour un import sécurisé,
-// exécutez la logique d'ajout/archivage côté serveur (Netlify functions, Vercel, etc.)
+  // Gestion du thème clair/sombre
+  const themeToggle = document.getElementById("theme-toggle");
+  const currentTheme = localStorage.getItem("theme") || "light";
+  if (currentTheme === "dark") {
+    document.body.classList.add("dark");
+    themeToggle.textContent = "🌙";
+  } else {
+    themeToggle.textContent = "☀︎";
+  }
+
+  themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark");
+    const isDark = document.body.classList.contains("dark");
+    themeToggle.textContent = isDark ? "🌙" : "☀︎";
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+  });
+
+  // Charger les articles
+  fetch("data/articles.json")
+    .then((response) => response.json())
+    .then((data) => {
+      const container = document.getElementById("articles");
+      data.articles.forEach((a) => {
+        const article = document.createElement("article");
+        article.innerHTML = `
+          <h2>${a.titre}</h2>
+          <p><em>${a.date}</em></p>
+          <p>${a.resume}</p>
+          <a href="${a.lien_source}" target="_blank">Source</a>
+          <img src="${a.url_image}" alt="Image article">
+        `;
+        container.appendChild(article);
+      });
+    });
+});
