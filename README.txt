@@ -1,46 +1,38 @@
-On_regarde_de_plus_pres_IA_Generative - README
 
-Contenu:
-- index.html, archives.html, about.html, contact.html
-- style.css, script.js
+README — On regarde de plus près : l'IA Générative
+
+Contenu
+- index.html : page d'accueil qui charge /data/articles.json
+- archives.html : liste des articles
+- about.html : présentation du site
+- contact.html : formulaire (démo)
+- style.css : styles (Tech zen)
+- script.js : gestion date/heure et import JSON
 - logo.svg, favicon.ico
-- /data/articles.json (format JSON prêt à l'import)
-- /images (placeholder)
+- /data/articles.json : fichier d'articles (format JSON)
 
-Hébergement:
-- GitHub Pages: déposer le dossier sur une branche 'gh-pages' ou root, activer Pages.
-- Netlify / Vercel: glisser-déposer ou connecter au repository, config par défaut.
-- Assurez-vous que le serveur sert les fichiers statiques (fichiers .json et .svg).
+Hébergement
+- Ce site peut être hébergé sur Netlify, GitHub Pages ou Vercel.
+- Pour GitHub Pages : poussez le répertoire dans un dépôt et activez GitHub Pages sur la branche main.
+- Pour Netlify / Vercel : déployez depuis le dépôt ou faites un drag-and-drop du dossier build.
 
-Mise à jour IA:
-- Le site charge /data/articles.json. Pour ajouter de nouveaux articles programatiquement:
-  1) Générer un JSON respectant le schéma:
-     {
-      "articles": [
-        {
-          "titre":"...",
-          "date":"YYYY-MM-DD",
-          "resume":"...",
-          "lien_source":"https://...",
-          "url_image":"https://..."
-        }
-      ]
-     }
-  2) Remplacer /data/articles.json puis re-déployer (ou pousser via API).
-  3) Le script script.js ajoutera automatiquement les articles sur la page d'accueil.
+Mise à jour hebdomadaire (workflow conseillé)
+1) Générer chaque semaine un JSON structuré (voir /data/articles.json) via votre prompt IA.
+2) Valider manuellement les sources et images (vérifier que les images libres de droit proviennent bien d'Unsplash/Pexels).
+3) Ajouter le nouvel article en tête du tableau "articles" et sauvegarder le fichier.
+4) Pour automatiser : écrivez une fonction serverless qui reçoit le JSON, vérifie les champs et ajoute l'article,
+   puis archive les anciens articles selon vos règles (par date ou nombre d'articles).
 
-Prompt hebdomadaire (exécuter avec votre assistant IA favori):
------
+Sécurité & bonnes pratiques
+- Ne faites pas confiance aveuglément aux sorties IA : vérifiez toujours les sources.
+- Gardez le fichier /data/articles.json derrière une validation si vous automatisez l'import.
+- Pour les images, préférez des URL directes Unsplash/Pexels avec crédits si nécessaire.
+
+Prompt hebdomadaire (exemple)
 Donne les 5 actualités majeures de la semaine dans le domaine de l’IA générative et des modèles de langage (LLM).
-Rédige un résumé clair et neutre (~300 mots par article) avec titre, date, résumé, source vérifiée (lien), et une image libre de droit (Unsplash/Pexels).
+Rédige un résumé clair et neutre (~300 mots par article, mise en page aérée) avec titre, date, résumé, source vérifiée (lien), et une image libre de droit (Unsplash/Pexels).
 Retourne la sortie en JSON au format prévu.
------
 
-SEO & accessibilité:
-- Balises meta: description, keywords, author incluses.
-- Chaque article peut intégrer un JSON-LD NewsArticle (à ajouter si nécessaire).
-- Images en lazy-loading pour performance.
-
-Remarques:
-- Vérifie toujours la réalité des informations: ce site référence des annonces officielles (OpenAI, Anthropic, Mistral, DeepMind, Hugging Face).
-- Pour production, configurez CSP, HTTPS et un backend pour le formulaire de contact.
+Remarque de vérification
+Vous m'avez demandé : "dis moi lorsque tu ne sais pas" et "verifie toujours la realite des informations".
+> Ce kit inclut des liens de sources ; vérifiez-les au moment du déploiement pour confirmer la fraîcheur et la précision.

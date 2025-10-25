@@ -1,62 +1,56 @@
-/* script.js - affiche date/heure et charge /data/articles.json pour construire la page */
-function updateClock(){
-  const el = document.getElementById('clock');
+
+// script.js — gère la date/heure et l'import d'articles depuis /data/articles.json
+function updateDateTime(){
+  const el = document.getElementById('datetime');
   if(!el) return;
   const now = new Date();
-  el.textContent = now.toLocaleString();
+  const opts = { year:'numeric', month:'short', day:'numeric', hour:'2-digit', minute:'2-digit' };
+  el.textContent = now.toLocaleString('fr-FR', opts);
 }
-setInterval(updateClock,1000);
-updateClock();
+updateDateTime();
+setInterval(updateDateTime, 60*1000);
 
-async function loadArticles(selector='#articles-list'){
-  try {
-    const resp = await fetch('/data/articles.json', {cache:'no-store'});
-    if(!resp.ok) throw new Error('Impossible de charger les articles');
-    const data = await resp.json();
-    const container = document.querySelector(selector);
-    data.articles.forEach(a=>{
-      const article = document.createElement('article');
-      article.className='article';
-      article.innerHTML = `
-        <div class="aside-date"><div>${new Date(a.date).toLocaleDateString()}</div></div>
-        <div style="flex:1">
-          <div class="meta">Publié le ${a.date} — Source: <a href="${a.lien_source}" target="_blank" rel="noopener noreferrer">${a.lien_source}</a></div>
-          <h2>${a.titre}</h2>
-          <p>${a.resume}</p>
-        </div>
-        <img loading="lazy" src="${a.url_image}" alt="${a.titre}">
-      `;
-      container.appendChild(article);
-    });
-  } catch(e){
-    console.error(e);
-  }
-}
-
-document.addEventListener('DOMContentLoaded', ()=> loadArticles('#articles-list'));
-
-
-function injectJSONLD(articles){
+// Chargement des articles depuis data/articles.json
+async function loadArticles(){
   try{
-    const ld = {
-      "@context":"https://schema.org",
-      "@graph": articles.map(a => ({
-        "@type":"NewsArticle",
-        "headline": a.titre,
-        "datePublished": a.date,
-        "image": a.url_image,
-        "author": {"@type":"Organization","name":"On regarde de plus près"},
-        "publisher": {"@type":"Organization","name":"On regarde de plus près","logo":{"@type":"ImageObject","url":"/logo.svg"}},
-        "mainEntityOfPage": {"@type":"WebPage","@id": window.location.href.split('#')[0]},
-        "description": a.resume
-      }))
-    };
-    const s = document.createElement('script');
-    s.type = 'application/ld+json';
-    s.text = JSON.stringify(ld, null, 2);
-    document.head.appendChild(s);
-  }catch(e){
-    console.error('Erreur JSON-LD', e);
+    const res = await fetch('/data/articles.json');
+    if(!res.ok) throw new Error('Impossible de charger les articles');
+    const data = await res.json();
+    const list = data.articles || [];
+    // Trier par date décroissante
+    list.sort((a,b)=> new Date(b.date) - new Date(a.date));
+    const container = document.getElementById('articles');
+    const archiveList = document.getElementById('archive-list');
+    const featured = document.getElementById('featured');
+    if(container){
+      container.innerHTML = '';
+      list.forEach((art, idx) => {
+        const dom = document.createElement('article');
+        dom.className = 'article';
+        dom.innerHTML = `
+          <img src="${art.url_image}" alt="${art.titre}">
+          <div class="meta"><time datetime="${art.date}">${art.date}</time> · <span>${art.lien_source ? '<a href="'+art.lien_source+'" target="_blank" rel="noopener">Source</a>' : ''}</span></div>
+          <h2>${art.titre}</h2>
+          <p>${art.resume}</p>
+        `;
+        container.appendChild(dom);
+        if(idx===0 && featured) featured.innerHTML = `<strong>${art.titre}</strong><p><time datetime="${art.date}">${art.date}</time></p>`;
+      });
+    }
+    if(archiveList){
+      archiveList.innerHTML = '';
+      list.forEach(art => {
+        const li = document.createElement('li');
+        li.innerHTML = `<a href="index.html#">${art.titre}</a> — <time datetime="${art.date}">${art.date}</time>`;
+        archiveList.appendChild(li);
+      });
+    }
+  }catch(err){
+    console.error(err);
   }
 }
+loadArticles();
 
+// Préparation pour import automatique / ajout et archivage
+// Le script ci‑dessous est un placeholder côté client : pour un import sécurisé,
+// exécutez la logique d'ajout/archivage côté serveur (Netlify functions, Vercel, etc.)

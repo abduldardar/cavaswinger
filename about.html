@@ -1,28 +1,43 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>À propos — On regarde de plus près : l’IA Générative</title>
-<link rel="stylesheet" href="/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>À propos — On regarde de plus près : l'IA Générative</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico">
 </head>
 <body>
-<header>
-  <div class="header-inner">
-    <div class="logo"><img src="/logo.svg" alt="logo"><nav><a href="/index.html">Accueil</a><a href="/archives.html">Archives</a><a href="/about.html">À propos</a><a href="/contact.html">Contact</a></nav></div>
-    <div class="time" id="clock">--</div>
-  </div>
-</header>
+  <header class="site-header">
+    <div class="logo"><img src="logo.svg" alt="logo" height="40"></div>
+    <nav class="main-nav">
+      <a href="index.html">Accueil</a>
+      <a href="archives.html">Archives</a>
+      <a href="about.html">À propos</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div id="datetime" class="datetime"></div>
+  </header>
 
-<main class="container">
-  <h1>À propos</h1>
-  <p>« On regarde de plus près : l’IA Générative » informe sur les progrès récents des modèles de langage et de l'IA générative. Mission : fournir des résumés clairs, sourcés et vérifiables, publiés chaque semaine. Le site agrège des annonces d'OpenAI, Anthropic, Mistral, DeepMind, Meta et Hugging Face et conserve une archive structurée.</p>
-  <h2>Principes éditoriaux</h2>
-  <ul>
-    <li>Ton journalistique, neutre et factuel.</li>
-    <li>Sources vérifiables et préférence pour les communications officielles.</li>
-    <li>Mises à jour hebdomadaires via un prompt IA et import JSON sécurisé.</li>
-  </ul>
-</main>
+  <main class="container">
+    <h1>À propos</h1>
+    <p>« On regarde de plus près : l'IA Générative » est un site d'information dédié aux évolutions récentes "
+    "des modèles de langage et des systèmes generatifs. Notre mission : informer de façon neutre et factuelle, "
+    "publier des résumés hebdomadaires et conserver les articles pour consultation.</p>
+
+    <h2>Mission</h2>
+    <p>Publier chaque semaine un résumé vérifié des actualités importantes dans le domaine de l'IA générative. "
+    "Les sources utilisées sont publiques et vérifiables ; nous indiquons toujours le lien de référence.</p>
+
+    <h2>Mise à jour</h2>
+    <p>Le site est conçu pour recevoir des ajouts automatiques depuis <code>/data/articles.json</code> : "
+    "ajoutez simplement un nouvel objet article et le site l'affichera.</p>
+  </main>
+
+  <footer class="site-footer">
+    <p>© {datetime.now().year} — On regarde de plus près : l'IA Générative</p>
+  </footer>
+
+  <script src="script.js"></script>
 </body>
 </html>

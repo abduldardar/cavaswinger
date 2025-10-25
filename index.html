@@ -1,38 +1,40 @@
 <!doctype html>
 <html lang="fr">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>On regarde de plus près : l’IA Générative</title>
-<meta name="description" content="Actualité et analyses sur l'IA générative et les modèles de langage. Articles hebdomadaires et archives.">
-<meta name="keywords" content="IA générative, LLM, intelligence artificielle, Mistral, OpenAI, Anthropic, DeepMind, Hugging Face">
-<meta name="author" content="On regarde de plus près">
-<link rel="icon" href="/favicon.ico">
-<link rel="stylesheet" href="/style.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>On regarde de plus près : l'IA Générative</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="icon" href="favicon.ico">
 </head>
 <body>
-<header>
-  <div class="header-inner">
-    <div class="logo"><img src="/logo.svg" alt="logo"><nav><a href="/index.html">Accueil</a><a href="/archives.html">Archives</a><a href="/about.html">À propos</a><a href="/contact.html">Contact</a></nav></div>
-    <div class="time" id="clock">--</div>
-  </div>
-</header>
+  <header class="site-header">
+    <div class="logo"><img src="logo.svg" alt="logo" height="40"></div>
+    <nav class="main-nav">
+      <a href="index.html">Accueil</a>
+      <a href="archives.html">Archives</a>
+      <a href="about.html">À propos</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+    <div id="datetime" class="datetime"></div>
+  </header>
 
-<main class="container">
-  <section class="hero">
-    <h1>On regarde de plus près : l’IA Générative</h1>
-    <p>Site vitrine consacré aux actualités et innovations récentes (moins de 6 mois) dans les modèles de langage et l'IA générative. Nouveaux articles chaque semaine — archives conservées.</p>
-  </section>
+  <main class="container">
+    <h1>On regarde de plus près : l'IA Générative</h1>
+    <p class="lead">Actualité et innovations récentes (moins de 6 mois) sur l'intelligence artificielle et les modèles de langage.</p>
 
-  <section id="articles-list" aria-live="polite">
-    <!-- Les articles sont chargés dynamiquement depuis /data/articles.json -->
-  </section>
+    <section id="articles" class="articles"></section>
 
-  <footer class="footer">
-    <small>© On regarde de plus près — Newsletter hebdomadaire. Code accessible, images libres de droit via Unsplash / Pexels.</small>
+    <aside class="sidebar">
+      <h3>À la une</h3>
+      <div id="featured"></div>
+    </aside>
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2025 — On regarde de plus près : l'IA Générative</p>
   </footer>
-</main>
 
-<script src="/script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
