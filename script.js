@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   // Charger les articles
-  fetch("data/articles.json")
+  fetch("./data/articles.json")
     .then((response) => response.json())
     .then((data) => {
       const container = document.getElementById("articles");
